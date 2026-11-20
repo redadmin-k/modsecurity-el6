@@ -1,0 +1,22 @@
+2026-11-21 01:47:45,608 - Mock Version: 6.9
+2026-11-21 01:47:45,611 - Start(bootstrap): chroot init
+2026-11-21 01:47:45,620 - Start(bootstrap): cleaning package manager metadata
+2026-11-21 01:47:45,623 - Finish(bootstrap): cleaning package manager metadata
+2026-11-21 01:47:46,582 - Finish(bootstrap): chroot init
+2026-11-21 01:47:46,583 - Start: chroot init
+2026-11-21 01:47:46,589 - Start: unpacking root cache
+2026-11-21 01:47:50,244 - Finish: unpacking root cache
+2026-11-21 01:47:50,246 - Start: cleaning package manager metadata
+2026-11-21 01:47:50,302 - Finish: cleaning package manager metadata
+2026-11-21 01:47:51,329 - Start: yum update
+2026-11-21 01:47:54,143 - Finish: yum update
+2026-11-21 01:47:54,570 - Finish: chroot init
+2026-11-21 01:47:54,570 - Start: build phase for modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:47:54,571 - Start: build setup for modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:48:51,104 - Finish: build setup for modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:48:51,104 - Start: rpmbuild modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:48:51,107 - Start: Outputting list of installed packages
+2026-11-21 01:48:51,322 - Finish: Outputting list of installed packages
+2026-11-21 01:53:00,708 - Finish: rpmbuild modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:53:00,731 - Finish: build phase for modsecurity-3.0.17-1.el8.src.rpm
+2026-11-21 01:53:00,733 - Finish: run
