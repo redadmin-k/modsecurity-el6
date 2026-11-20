@@ -4,6 +4,8 @@ This repository provides an unofficial RPM package for ModSecurity v3 on Enterpr
 
 This package is intended for testing and verification of Nginx WAF integration using the ModSecurity-nginx connector.
 
+**Dependency:** ModSecurity on EL6 requires the separately backported **YAJL 2.0.4 RPM** from [`redadmin-k/yajl-el6`](https://github.com/redadmin-k/yajl-el6). Install the EL6 YAJL runtime package along with ModSecurity; the standard EL6 repositories may not provide a compatible version.
+
 **Important:** EL6 is end-of-life. This project does not restore vendor security support for EL6 and is not a recommendation to deploy EL6 in production.
 
 ## Overview
@@ -30,6 +32,8 @@ The package is intended to include:
 
 The package can be used together with an Nginx build that includes the ModSecurity-nginx connector, provided that both were built with compatible libraries and toolchains.
 
+This RPM does **not** bundle YAJL. YAJL must be installed separately from the EL6 backport.
+
 ## Repository Layout
 
 ```text
@@ -45,40 +49,85 @@ RPM files are stored under:
 RPMS/
 ```
 
+## Required YAJL Dependency
+
+ModSecurity v3 on EL6 requires **YAJL 2.0.4**, backported from the CentOS 7 source RPM `yajl-2.0.4-4.el7.src.rpm` for EL6.
+
+YAJL backport repository:
+
+https://github.com/redadmin-k/yajl-el6
+
+Required packages:
+
+- `yajl` — runtime library (`libyajl.so.2`), needed when running the ModSecurity build that links to YAJL
+- `yajl-devel` — headers and development files, needed when **building** ModSecurity against YAJL
+
+The `yajl-el6` repository is independent of this repository. Download or build its **EL6 RPMs**, not the original EL7 binaries. A normal EL6 installation may not have the appropriate YAJL packages available.
+
+For a `mock` build, make the backported `yajl` and `yajl-devel` RPMs available through the EL6 mock buildroot or a local RPM repository before building ModSecurity.
+
 ## Install
 
-Install the built RPM package with:
+### 1. Install the EL6 YAJL RPM
+
+Obtain the built YAJL RPM from the [`yajl-el6`](https://github.com/redadmin-k/yajl-el6) repository. Replace `/path/to/yajl-el6` below with the directory containing your local checkout or downloaded RPMs.
 
 ```bash
-sudo yum localinstall RPMS/*.rpm
+sudo yum localinstall /path/to/yajl-el6/RPMS/x86_64/yajl-[0-9]*.rpm
 ```
 
-If RPM files are stored under an architecture subdirectory, use:
+The runtime package is required. If you are also compiling ModSecurity or another YAJL-dependent component, install the development package:
 
 ```bash
-sudo yum localinstall RPMS/x86_64/*.rpm
+sudo yum localinstall /path/to/yajl-el6/RPMS/x86_64/yajl-devel-*.rpm
 ```
 
-To inspect RPMs across subdirectories before installing:
+Check that YAJL was installed and its shared library can be resolved:
 
 ```bash
-find RPMS -type f -name '*.rpm' | sort
+rpm -q yajl
+ldconfig -p | grep libyajl
 ```
 
-Install the appropriate runtime RPM (and its required dependencies). Do not blindly install every RPM if the directory also contains debuginfo, devel, or other optional packages.
+Expected library name (path may vary):
+
+```text
+libyajl.so.2 => /usr/lib64/libyajl.so.2
+```
+
+### 2. Install the ModSecurity RPM
+
+Install the ModSecurity runtime RPM from this repository:
+
+```bash
+sudo yum localinstall RPMS/x86_64/modsecurity-[0-9]*.rpm
+```
+
+If RPMs are stored directly under `RPMS/`, adjust the path accordingly. Use `find RPMS -type f -name '*.rpm' | sort` to inspect the available files. Avoid installing debuginfo or optional development packages unintentionally.
+
+You can also install the **YAJL runtime RPM and ModSecurity runtime RPM in one yum transaction**, which lets yum resolve the locally supplied YAJL dependency:
+
+```bash
+sudo yum localinstall \
+  /path/to/yajl-el6/RPMS/x86_64/yajl-[0-9]*.rpm \
+  RPMS/x86_64/modsecurity-[0-9]*.rpm
+```
+
+If yum reports other missing shared libraries, install the corresponding EL6-compatible dependencies. Do not substitute EL7 binary RPMs for EL6 packages.
 
 ## Verify Installation
 
-Check installed files:
+Check installed YAJL and ModSecurity packages:
 
 ```bash
+rpm -q yajl modsecurity
 rpm -ql modsecurity | grep /opt/modsecurity
 ```
 
-Check that the runtime library is visible to the dynamic linker:
+Check that both runtime libraries are visible to the dynamic linker:
 
 ```bash
-ldconfig -p | grep libmodsecurity
+ldconfig -p | grep -E 'libmodsecurity|libyajl'
 ```
 
 Expected example:
@@ -99,7 +148,7 @@ Then verify that the library and its dependencies can be resolved:
 ldd /opt/modsecurity/lib64/libmodsecurity.so.3
 ```
 
-Any `not found` entry indicates a missing runtime dependency.
+Any `not found` entry indicates a missing runtime dependency. In particular, verify that `libyajl.so.2` resolves to the installed EL6 YAJL backport.
 
 ## Example Paths
 
@@ -303,13 +352,14 @@ Intended target environment (not a claim of completed testing):
 - EL6 x86_64 (CentOS 6 / RHEL 6)
 - ModSecurity v3.0.16 (target source version; build success must be verified)
 - Nginx with the ModSecurity-nginx connector
+- YAJL 2.0.4 EL6 backport from `redadmin-k/yajl-el6` (required dependency)
 
 Build approach:
 
 - Build Tool: `mock`
 - Example Mock Config: `centos+epel-6-x86_64` (if present; archived EL6 repositories or a custom mock configuration may be required)
 
-EL6's default GCC 4.4.x is not sufficient for many modern C++ components. Depending on the source and dependencies, a newer toolchain and backported development libraries may be required.
+EL6's default GCC 4.4.x is not sufficient for many modern C++ components. Depending on the source and dependencies, a newer toolchain and backported development libraries may be required. **Install `yajl-devel` from the EL6 backport in the build environment**; installing the YAJL runtime package on the host alone does not satisfy ModSecurity's build-time headers requirement.
 
 Because EL6 is end-of-life, repository metadata and packages may no longer be available from normal mirrors. Use appropriate archives and verify dependency versions and package provenance. A successful build does not establish security support or runtime compatibility.
 
@@ -319,15 +369,16 @@ Because EL6 is end-of-life, repository metadata and packages may no longer be av
 
 For integration verification:
 
-1. Build and inspect the ModSecurity RPM and its dependencies.
-2. Install the RPM in an isolated EL6 test environment.
-3. Install or use an Nginx build with ModSecurity-nginx support.
-4. Configure OWASP CRS manually.
-5. Start with `SecRuleEngine DetectionOnly`.
-6. Review audit logs and verify rule execution.
-7. Add local exclusions for false positives.
-8. Only consider `SecRuleEngine On` after testing and risk review.
-9. Keep CRS configuration and local exclusions under version control.
+1. Install or provide the `yajl-el6` backport (`yajl-devel` in the buildroot, `yajl` on the test host).
+2. Build and inspect the ModSecurity RPM and its dependencies.
+3. Install YAJL and ModSecurity in an isolated EL6 test environment.
+4. Install or use an Nginx build with ModSecurity-nginx support.
+5. Configure OWASP CRS manually.
+6. Start with `SecRuleEngine DetectionOnly`.
+7. Review audit logs and verify rule execution.
+8. Add local exclusions for false positives.
+9. Only consider `SecRuleEngine On` after testing and risk review.
+10. Keep CRS configuration and local exclusions under version control.
 
 ModSecurity and CRS should be treated as one layer of defense, not as a replacement for application fixes, patching, access control, rate limiting, or regular security updates.
 
