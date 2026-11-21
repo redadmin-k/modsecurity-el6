@@ -97,7 +97,7 @@ DEBUG util.py:717:  child environment: None
 DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-t', 'devpts', '-o', 'gid=5,mode=0620,ptmxmode=0666,newinstance', 'devpts', '/var/lib/mock/centos-6-x86_64-bootstrap/root/dev/pts'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:688:  Child return code was: 0
 DEBUG util.py:717:  child environment: None
-DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-o', 'bind', '/tmp/mock-selinux-plugin.d0tpg9c1', '/var/lib/mock/centos-6-x86_64-bootstrap/root/proc/filesystems'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
+DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-o', 'bind', '/tmp/mock-selinux-plugin.2ngkmhih', '/var/lib/mock/centos-6-x86_64-bootstrap/root/proc/filesystems'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:688:  Child return code was: 0
 DEBUG file_util.py:17:  ensuring that dir exists: /var/lib/mock/centos-6-x86_64-bootstrap/root/sys/fs/selinux
 DEBUG util.py:717:  child environment: None
@@ -178,14 +178,14 @@ DEBUG util.py:688:  Child return code was: 0
 DEBUG util.py:717:  child environment: None
 DEBUG util.py:636:  Executing command: ['/bin/free', '--human'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:537:                total        used        free      shared  buff/cache   available
-DEBUG util.py:537:  Mem:          3.6Gi       622Mi       1.6Gi        16Mi       1.3Gi       2.7Gi
-DEBUG util.py:537:  Swap:         4.0Gi          0B       4.0Gi
+DEBUG util.py:537:  Mem:          3.6Gi       953Mi       1.0Gi        14Mi       1.7Gi       2.4Gi
+DEBUG util.py:537:  Swap:         4.0Gi       6.0Mi       3.9Gi
 DEBUG util.py:688:  Child return code was: 0
 DEBUG util.py:717:  child environment: None
 DEBUG util.py:636:  Executing command: ['/bin/df', '-H', '-T', '/var/lib/mock/centos-6-x86_64/root', '/var/cache/mock'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:537:  Filesystem     Type  Size  Used Avail Use% Mounted on
-DEBUG util.py:537:  /dev/vda3      xfs    49G   25G   24G  51% /
-DEBUG util.py:537:  /dev/vda3      xfs    49G   25G   24G  51% /
+DEBUG util.py:537:  /dev/vda3      xfs    49G   28G   21G  58% /
+DEBUG util.py:537:  /dev/vda3      xfs    49G   28G   21G  58% /
 DEBUG util.py:688:  Child return code was: 0
 DEBUG buildroot.py:760:  create skeleton dirs
 DEBUG file_util.py:17:  ensuring that dir exists: /var/lib/mock/centos-6-x86_64/root/var/lib/rpm
@@ -270,7 +270,7 @@ DEBUG util.py:717:  child environment: None
 DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-t', 'devpts', '-o', 'gid=5,mode=0620,ptmxmode=0666,newinstance', 'devpts', '/var/lib/mock/centos-6-x86_64/root/dev/pts'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:688:  Child return code was: 0
 DEBUG util.py:717:  child environment: None
-DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-o', 'bind', '/tmp/mock-selinux-plugin.jo3frgkx', '/var/lib/mock/centos-6-x86_64/root/proc/filesystems'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
+DEBUG util.py:636:  Executing command: ['/bin/mount', '-n', '-o', 'bind', '/tmp/mock-selinux-plugin.pto13zp6', '/var/lib/mock/centos-6-x86_64/root/proc/filesystems'] with env {'TERM': 'vt100', 'SHELL': '/bin/sh', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'LANG': 'C.UTF-8'} and shell False
 DEBUG util.py:688:  Child return code was: 0
 DEBUG file_util.py:17:  ensuring that dir exists: /var/lib/mock/centos-6-x86_64/root/sys/fs/selinux
 DEBUG util.py:717:  child environment: None
@@ -1108,19 +1108,11 @@ DEBUG util.py:537:  Transaction Summary
 DEBUG util.py:537:  =============================================================================================================================================================================================
 DEBUG util.py:537:  Install      26 Package(s)
 DEBUG util.py:537:  Total size: 62 M
-DEBUG util.py:537:  Total download size: 19 M
+DEBUG util.py:537:  Total download size: 1.2 M
 DEBUG util.py:537:  Installed size: 172 M
 DEBUG util.py:537:  Downloading Packages:
-DEBUG util.py:537:  (1/14): autoconf-2.63-5.1.el6.noarch.rpm                                                                                                                              | 781 kB     00:00     
-DEBUG util.py:537:  (2/14): automake-1.11.1-4.el6.noarch.rpm                                                                                                                              | 550 kB     00:00     
-DEBUG util.py:537:  (3/14): devtoolset-9-gcc-c++-9.1.1-2.5.el6.x86_64.rpm                                                                                                                 |  12 MB     00:01     
-DEBUG util.py:537:  (4/14): devtoolset-9-libstdc++-devel-9.1.1-2.5.el6.x86_64.rpm                                                                                                         | 3.2 MB     00:00     
-DEBUG util.py:537:  (5/14): libcurl-devel-7.19.7-53.el6_9.x86_64.rpm                                                                                                                      | 247 kB     00:00     
-DEBUG util.py:537:  (6/14): libidn-devel-1.18-2.el6.x86_64.rpm                                                                                                                            | 137 kB     00:00     
-DEBUG util.py:537:  (7/14): libxml2-devel-2.7.6-21.el6_8.1.x86_64.rpm                                                                                                                     | 1.1 MB     00:00     
-DEBUG util.py:537:  (8/14): m4-1.4.13-5.el6.x86_64.rpm                                                                                                                                    | 278 kB     00:00     
 DEBUG util.py:537:  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-DEBUG util.py:537:  Total                                                                                                                                                        5.1 MB/s |  19 MB     00:03     
+DEBUG util.py:537:  Total                                                                                                                                                        155 MB/s | 1.2 MB     00:00     
 DEBUG util.py:535:  warning: rpmts_HdrFromFdno: Header V4 RSA/SHA1 Signature, key ID f2ee9d55: NOKEY
 DEBUG util.py:537:  Retrieving key from file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
 DEBUG util.py:537:  Importing GPG key 0xF2EE9D55:
@@ -1927,7 +1919,7 @@ DEBUG util.py:537:  plymouth-0.8.3-29.el6.centos.x86_64 1490151181 193924 instal
 DEBUG util.py:537:  initscripts-9.03.61-1.el6.centos.x86_64 1529424780 5735427 installed
 DEBUG util.py:537:  rpm-build-4.8.0-59.el6.x86_64 1529423780 323213 installed
 DEBUG util.py:537:  tar-2:1.23-15.el6_8.x86_64 1468339234 2616465 installed
-DEBUG util.py:537:  gpg-pubkey-f2ee9d55-62206e0d 1795193297 0 installed
+DEBUG util.py:537:  gpg-pubkey-f2ee9d55-62206e0d 1795231119 0 installed
 DEBUG util.py:537:  libselinux-python-2.0.94-7.el6.x86_64 1462921191 672851 installed
 DEBUG util.py:537:  libidn-devel-1.18-2.el6.x86_64 1282611085 412246 installed
 DEBUG util.py:537:  devtoolset-9-libstdc++-devel-9.1.1-2.5.el6.x86_64 1571864909 20726738 installed
